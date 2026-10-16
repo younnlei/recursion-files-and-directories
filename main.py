@@ -41,10 +41,15 @@ my_dir = File('root', files=[
 
 # Write a recursive function to print just the files (non directories)
 def print_files(file):
-    # what's the recursive case?
-    # what's the base case (how do we know to stop recursing)?
-    # when should we print?
-    pass
+    # Base case
+    if not file.is_dir:
+        print(file.name)
+        return
+
+    # Recursive case
+    for item in file.files:
+        print_files(item)
+
 
 print("== print_files ==")
 print_files(my_dir)
@@ -57,10 +62,16 @@ print_files(my_dir)
 
 # Write a recursive function to print just the directories
 def print_dirs(file):
-    # what's the recursive case?
-    # what's the base case (how do we know to stop recursing)?
-    # when should we print?
-    pass
+    # Base case: stop if it's not a directory
+    if not file.is_dir:
+        return
+
+    # Print the directory name
+    print(file.name)
+
+    # Recursive case: explore each item
+    for item in file.files:
+        print_dirs(item)
 
 print("== print_dirs ==")
 print_dirs(my_dir)
@@ -80,15 +91,19 @@ print_dirs(my_dir)
 # Write a recursive function to print an indented view of the structure
 # (indent by four spaces for each layer down in the structure)
 def print_indented(file, depth=0):
-    # what's the recursive case?
-    # what's the base case (how do we know to stop recursing)?
-    # how should we format the printing (using the depth)?
-    # how do we update the depth passed in the parameters?
+    # Create indentation based on depth
+    indent = "    " * depth
 
-    # the following code can be used to build the indentation based on the depth
-    # indent = "    " * depth
-    
-    pass
+    # Print the current file or directory
+    print(indent + file.name)
+
+    # Base case: stop if it's a regular file
+    if not file.is_dir:
+        return
+
+    # Recursive case: explore the directory
+    for item in file.files:
+        print_indented(item, depth + 1)
 
 print("== print_indented ==")
 print_indented(my_dir)
